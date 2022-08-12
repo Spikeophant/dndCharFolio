@@ -3,13 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <title>Character Folio and Generator</title>
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
+<main>
+    <nav>
+        <div class="nav-wrapper">
+            <a class="brand-logo" href="#">D&D Character Folio</a>
+        </div>
+    </nav>
+    <section class="container">
+        <div class="row">
+            <div class="col s3" id="charList"><a class="btn-floating btn-large waves-effect waves-light red"
+                                                 id="addChar"><i class="material-icons">+
+            </i></a></div>
+            <div class="col s8" id="main">
+                <div class="row">
+                    <div class="col s6">
+                        <input placeholder="Character Name" id="charName" type="text" class="validate">
+                        <label for="charName">Character Name</label>
+                    </div>
+                    <div class="col s2 input-field">
 
+                        <select id="charAlign">
+                            <option value="" disabled selected>Alignment</option>
+                            <option value="good">Good</option>
+                        </select>
+                        <label for="charAlign">Character Alignment</label>
+                    </div>
+                    <div class="col s3">
+                        <img src="" id="charImg" alt="charImg">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <select id="charClass">
+                            <option value="" disabled selected>Class</option>
+                            <option value="Mage">Class Here</option>
+                        </select>
+                        <label for="charClass">Class</label>
+                    </div>
+                    <div class="col s1">
+                        <input placeholder="1" id="charLvl" type="text" class="validate">
+                        <label for="charLvl">Level</label>
+                    </div>
+                    <div class="col s2">
+                        <select id="charRace">
+                            <option value="" disabled selected>Race</option>
+                            <option value="Race">Race Here</option>
+                        </select>
+                        <label for="charRace">Race</label>
+                    </div>
+                    <div class="col s1">
+                        <input placeholder="Age" id="charAge" type="text" class="validate">
+                        <label for="charAge">Age</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Armor Class" id="charArmor" type="text" class="validate" disabled>
+                        <label for="charArmor">Armor class</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Hit Points" id="charHp" type="text" class="validate" disabled>
+                        <label for="charHp">Hit Points</label>
+                    </div>
+                    <div class="col s1">
+                        <input placeholder="Gender" id="charGender" type="text" class="validate">
+                        <label for="charGender">Gender</label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Strength" type="text" class="validate" id="charStr">
+                        <label for="charStr">Strength</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charStrMod">
+                        <label for="charStrMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveStr">
+                        <label for="saveStr">Strength Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Dexterity" type="text" class="validate" id="charDex">
+                        <label for="charStr">Dexterity</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charDexMod">
+                        <label for="charDexMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveDex">
+                        <label for="saveDex">Dexterity Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Intelligence" type="text" class="validate" id="charInt">
+                        <label for="charInt">Intelligence</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charIntMod">
+                        <label for="charIntMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveInt">
+                        <label for="saveInt">Intelligence Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Wisdom" type="text" class="validate" id="charWis">
+                        <label for="charWis">Wisdom</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charWisMod">
+                        <label for="charWisMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveWis">
+                        <label for="saveWis">Wisdom Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Constitution" type="text" class="validate" id="charCon">
+                        <label for="charCon">Constitution</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charConMod">
+                        <label for="charConMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveCon">
+                        <label for="saveCon">Constitution Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">
+                        <input placeholder="Charisma" type="text" class="validate" id="charChar">
+                        <label for="charChar">Charisma</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charCharMod">
+                        <label for="charCharMod">Adjustment</label>
+                    </div>
+                    <div class="col s2">
+                        <input placeholder="0" type="text" class="validate" disabled id="saveChar">
+                        <label for="saveChar">Charisma Save</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <form action="#">
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langAbyssal" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langAbyssal">Abyssal</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langCelestial" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langCelestial">Celestial</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langCommon" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langCommon">Common</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langDeepSpeech" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langDeepSpeech">Deep Speech</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langDraconic" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langDraconic">Draconic</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langDwarvish" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langDwarvish">Dwarvish</label>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form action="#">
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langElvish" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langElvish">Elvish</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langGiant" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langGiant">Giant</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langGnomish" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langGnomish">Gnomish</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langGoblin" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langGoblin">Goblin</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langHalfling" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langHalfling">Halfling</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langInfernal" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langInfernal">Infernal</label>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form action="#">
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langOrc" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langOrc">Orc</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langPrimordial" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langPrimordial">Primordial</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langSylvan" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langSylvan">Sylvan</label>
+                            </p>
+                        </div>
+                        <div class="col s1">
+                            <p>
+                                <label>
+                                    <input id="langUndercommon" type="checkbox" />
+                                    <span></span>
+                                </label>
+                                <label for="langUndercommon">Undercommon</label>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillAcro" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillAcroMod" disabled placeholder="0">
+                        <label for="skillAcroMod">Acrobatics(dex)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillAnimHan" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillAnimHanMod" disabled placeholder="0">
+                        <label for="skillAnimHanMod">Animal Handling(wis)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillArc" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillArcMod" disabled placeholder="0">
+                        <label for="skillArcMod">Arcana</label>
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillAth" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillAthMod" disabled placeholder="0">
+                        <label for="skillAthMod">Athletics(str)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillDec" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillDecMod" disabled placeholder="0">
+                        <label for="skillDecMod">Deception(Char)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillHist" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillHistMod" disabled placeholder="0">
+                        <label for="skillHistMod">History</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillIns" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillInsMod" disabled placeholder="0">
+                        <label for="skillInsMod">Insight(wis)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillInt" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillIntMod" disabled placeholder="0">
+                        <label for="skillIntMod">Intimidation(Char)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillInv" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillInvMod" disabled placeholder="0">
+                        <label for="skillInvMod">Investigation</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillMed" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillMedMod" disabled placeholder="0">
+                        <label for="skillMedMod">Medicine(wis)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillNat" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillNatMod" disabled placeholder="0">
+                        <label for="skillNatMod">Nature(Int)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillPerc" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillPercMod" disabled placeholder="0">
+                        <label for="skillPercMod">Perception(wis)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillPerf" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillPerfMod" disabled placeholder="0">
+                        <label for="skillPerfMod">Performance(char)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillPers" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillPersMod" disabled placeholder="0">
+                        <label for="skillPersMod">Persuation(Char)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillRel" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillRelMod" disabled placeholder="0">
+                        <label for="skillRelMod">Religion</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillSoH" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillSoHMod" disabled placeholder="0">
+                        <label for="skillSoHMod">Sleight of Hand(dex)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillSte" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillSteMod" disabled placeholder="0">
+                        <label for="skillSteMod">Stealth(dex)</label>
+                    </div>
+                    <div class="col s1">
+                        <p>
+                            <label>
+                                <input id="skillSurv" type="checkbox" />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col s1">
+                        <input type="text" class="validate" id="skillSurvMod" disabled placeholder="0">
+                        <label for="skillSurvMod">Survival</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+    </section>
+</main>
+<script src="assets/js/script.js"></script>
 </body>
 </html>
