@@ -43,7 +43,8 @@
                     <div class="col s2">
                         <select id="charClass">
                             <option value="" disabled selected>Class</option>
-                            <option value="Mage">Class Here</option>
+                            <option value="bard">Bard</option>
+                            <option value="barbarian">Barbarian</option>
                         </select>
                         <label for="charClass">Class</label>
                     </div>
@@ -78,90 +79,92 @@
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Strength" type="text" class="validate" id="charStr">
-                        <label for="charStr">Strength</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charStrMod">
-                        <label for="charStrMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveStr">
-                        <label for="saveStr">Strength Save</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Dexterity" type="text" class="validate" id="charDex">
-                        <label for="charStr">Dexterity</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charDexMod">
-                        <label for="charDexMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveDex">
-                        <label for="saveDex">Dexterity Save</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Intelligence" type="text" class="validate" id="charInt">
-                        <label for="charInt">Intelligence</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charIntMod">
-                        <label for="charIntMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveInt">
-                        <label for="saveInt">Intelligence Save</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Wisdom" type="text" class="validate" id="charWis">
-                        <label for="charWis">Wisdom</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charWisMod">
-                        <label for="charWisMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveWis">
-                        <label for="saveWis">Wisdom Save</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Constitution" type="text" class="validate" id="charCon">
-                        <label for="charCon">Constitution</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charConMod">
-                        <label for="charConMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveCon">
-                        <label for="saveCon">Constitution Save</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s2">
-                        <input placeholder="Charisma" type="text" class="validate" id="charChar">
-                        <label for="charChar">Charisma</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="Adjustment" type="text" class="validate" disabled id="charCharMod">
-                        <label for="charCharMod">Adjustment</label>
-                    </div>
-                    <div class="col s2">
-                        <input placeholder="0" type="text" class="validate" disabled id="saveChar">
-                        <label for="saveChar">Charisma Save</label>
-                    </div>
-                </div>
+                <form id="abilityScores">
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Strength" type="number" class="validate abilityInput" id="charStr">
+                          <label for="charStr">Strength</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charStrMod">
+                          <label for="charStrMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveStr">
+                          <label for="saveStr">Strength Save</label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Dexterity" type="number" class="validate abilityInput" id="charDex">
+                          <label for="charStr">Dexterity</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charDexMod">
+                          <label for="charDexMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveDex">
+                          <label for="saveDex">Dexterity Save</label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Intelligence" type="number" class="validate abilityInput" id="charInt">
+                          <label for="charInt">Intelligence</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charIntMod">
+                          <label for="charIntMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveInt">
+                          <label for="saveInt">Intelligence Save</label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Wisdom" type="number" class="validate abilityInput" id="charWis">
+                          <label for="charWis">Wisdom</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charWisMod">
+                          <label for="charWisMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveWis">
+                          <label for="saveWis">Wisdom Save</label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Constitution" type="number" class="validate abilityInput" id="charCon">
+                          <label for="charCon">Constitution</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charConMod">
+                          <label for="charConMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveCon">
+                          <label for="saveCon">Constitution Save</label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s2">
+                          <input placeholder="Charisma" type="number" class="validate abilityInput" id="charChar">
+                          <label for="charChar">Charisma</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charCharMod">
+                          <label for="charCharMod">Adjustment</label>
+                      </div>
+                      <div class="col s2">
+                          <input placeholder="0" type="number" class="validate" disabled id="saveChar">
+                          <label for="saveChar">Charisma Save</label>
+                      </div>
+                  </div>
+                </form>
                 <div class="row">
                     <form action="#">
                         <div class="col s1">
@@ -550,6 +553,7 @@
             </div>
     </section>
 </main>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="assets/js/script.js"></script>
 </body>
 </html>
