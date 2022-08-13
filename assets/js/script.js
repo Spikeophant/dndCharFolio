@@ -35,7 +35,7 @@ abilityEls.on('input', function() {
     // console.log($(this).parent())
     // console.log($(this).parent().children())
     let scoreChanged;
-    switch ($(this).index()) {
+    switch (abilityEls.index(this)) {
         case 0:
             scoreChanged = "Strength";
             break;
