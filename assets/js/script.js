@@ -2,9 +2,26 @@ var classEl = document.querySelector("#charClass");
 var raceEl = document.querySelector("#charRace");
 var abilityEls = $(".abilityInput")
 var abilityModEls = $(".abilityMod")
+var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
+var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
 classEl.addEventListener('change', (event) => {
     console.log("Class has been changed to: " + classEl.value);
+
+    fetch(dndApiUrl + "/classes/" + classEl.value)
+        .then(function(res) {
+            if (res.ok) {
+                res.json().then(function(data) {
+                    console.log(data)
+                })
+            }
+            else {
+                console.log("Failed with a status code of " + res.statusText)
+            }
+        })
+        .catch(function (error) {
+            console.log("Could not connect to API")
+        })
 
     /*
         when class is selected, update:
