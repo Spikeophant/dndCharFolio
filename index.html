@@ -31,7 +31,15 @@
 
                         <select id="charAlign">
                             <option value="" disabled selected>Alignment</option>
-                            <option value="good">Good</option>
+                            <option value="law-good">Lawful Good</option>
+                            <option value="neu-good">Neutral Good</option>
+                            <option value="cha-good">Chaotic Good</option>
+                            <option value="law-neut">Lawful Neutral</option>
+                            <option value="neutral">True Neutral</option>
+                            <option value="cha-neut">Chaotic Neutral</option>
+                            <option value="law-evil">Lawful Evil</option>
+                            <option value="neu-evil">Neutral Evil</option>
+                            <option value="cha-evil">Chaotic Evil</option>
                         </select>
                         <label for="charAlign">Character Alignment</label>
                     </div>
@@ -45,6 +53,16 @@
                             <option value="" disabled selected>Class</option>
                             <option value="bard">Bard</option>
                             <option value="barbarian">Barbarian</option>
+                            <option value="cleric">Cleric</option>
+                            <option value="druid">Druid</option>
+                            <option value="fighter">Fighter</option>
+                            <option value="monk">Monk</option>
+                            <option value="paladin">Paladin</option>
+                            <option value="ranger">Ranger</option>
+                            <option value="rogue">Rogue</option>
+                            <option value="sorcerer">Sorcerer</option>
+                            <option value="warlock">Warlock</option>
+                            <option value="wizard">Wizard</option>
                         </select>
                         <label for="charClass">Class</label>
                     </div>
@@ -82,7 +100,7 @@
                 <form id="abilityScores">
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Strength" type="number" class="validate abilityInput" id="charStr">
+                          <input placeholder="Strength" type="number" min="3" class="validate abilityInput" id="charStr">
                           <label for="charStr">Strength</label>
                       </div>
                       <div class="col s2">
@@ -96,7 +114,7 @@
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Dexterity" type="number" class="validate abilityInput" id="charDex">
+                          <input placeholder="Dexterity" type="number" min="3" class="validate abilityInput" id="charDex">
                           <label for="charStr">Dexterity</label>
                       </div>
                       <div class="col s2">
@@ -110,7 +128,7 @@
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Intelligence" type="number" class="validate abilityInput" id="charInt">
+                          <input placeholder="Intelligence" type="number" min="3" class="validate abilityInput" id="charInt">
                           <label for="charInt">Intelligence</label>
                       </div>
                       <div class="col s2">
@@ -124,7 +142,7 @@
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Wisdom" type="number" class="validate abilityInput" id="charWis">
+                          <input placeholder="Wisdom" type="number" min="3" class="validate abilityInput" id="charWis">
                           <label for="charWis">Wisdom</label>
                       </div>
                       <div class="col s2">
@@ -138,7 +156,7 @@
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Constitution" type="number" class="validate abilityInput" id="charCon">
+                          <input placeholder="Constitution" type="number" min="3" class="validate abilityInput" id="charCon">
                           <label for="charCon">Constitution</label>
                       </div>
                       <div class="col s2">
@@ -152,7 +170,7 @@
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Charisma" type="number" class="validate abilityInput" id="charChar">
+                          <input placeholder="Charisma" type="number" min="3" class="validate abilityInput" id="charChar">
                           <label for="charChar">Charisma</label>
                       </div>
                       <div class="col s2">
