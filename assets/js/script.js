@@ -45,12 +45,10 @@ classEl.addEventListener('change', (event) => {
 
 // $(".abilityInput").on('input', onAbilityInput);
 
+/*
+    Handles ability score input changing. Should affect HP, Armor Class, and Skill modifiers.
+*/
 abilityEls.on('input', function() {
-    console.log($(this))
-    console.log($(this).index()) 
-    console.log(abilityEls.index(this))
-    // console.log($(this).parent())
-    // console.log($(this).parent().children())
     let scoreChanged;
     switch ($(this).index()) {
         case 0:
@@ -76,6 +74,7 @@ abilityEls.on('input', function() {
     console.log($(".abilityInput"))
     console.log("Something changed, specifically " + scoreChanged + " to " + $(this).val())
 
+    // change ability modifer
     $(".abilityMod").eq(abilityEls.index(this)).val( Math.floor(($(this).val() - 10) / 2 ));
 })
 
