@@ -4,6 +4,9 @@ var abilityEls = $(".abilityInput")
 var abilityModEls = $(".abilityMod")
 var skillModEls = $(".skillMod");
 var skillCheckboxEls = document.querySelectorAll(".isProf"); //$(".isProf");
+var acEl = document.querySelector("#charArmor");
+var hpEl = document.querySelector("#charHp");
+var curHitDie;
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
@@ -58,6 +61,10 @@ classEl.addEventListener('change', (event) => {
                     console.log(data)
                     // update skill proficiency selection
                     updateSkillProficiencySelection(data.proficiency_choices[0]);
+                    curHitDie = data.hit_die;
+
+                    // update HP
+                    updateArmorAndHP();
                 })
             }
             else {
@@ -118,7 +125,7 @@ var updateSkillMods = function(index) {
     // otherwise, go through this switch statement
     skillModEls.each(function () {
         let ability = $(this).attr('class').split(' ')[0];
-        console.log($(this).index())
+        //console.log($(this).index())
         switch (ability) {
             case "str":
                 $(this).val(abilityModEls.eq(0).val());
@@ -181,11 +188,26 @@ for (var x = 0; x < skillCheckboxEls.length; x++) {
     // Potential issues: This may not play well when selecting a race that gives a skill proficiency.
 }
 
+var updateArmorAndHP = function() {
+    // Armor Class
+    if (abilityModEls.eq(1).val() !== "") {
+        acEl.value = 10 + parseInt(abilityModEls.eq(1).val());
+    }
+
+    // HP
+    hpEl.value = curHitDie // + parseInt(abilityModEls.eq(4).val());
+    console.log(typeof abilityModEls.eq(4).val())
+    if (abilityModEls.eq(4).val() !== "") {
+        hpEl.value = curHitDie + parseInt(abilityModEls.eq(4).val());
+    }
+}
+
 /*
     Handles ability score input changing. Should affect HP, Armor Class, and Skill modifiers.
 */
 abilityEls.on('input', function() {
     let scoreChanged;
+    console.log($(this).index())
     switch ($(this).index()) {
         case 0:
             scoreChanged = "Strength";
@@ -215,6 +237,8 @@ abilityEls.on('input', function() {
 
     // propagate ability mods through skill list
     updateSkillMods();
+
+    updateArmorAndHP();
 })
 
 // add event listener for race selection
@@ -223,3 +247,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems);
 });
+
+var init = function() {
+    updateSkillMods();
+
+    updateArmorAndHP();
+
+    for (var i = 0; i < abilityEls.length; i++) {
+        abilityModEls.eq(i).val( Math.floor( (abilityEls.eq(i).val() - 10) / 2 ) );
+    }
+}
