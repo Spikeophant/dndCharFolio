@@ -28,7 +28,9 @@ function languageSelectionPopulation(race) {
 function languageUnselect() {
     $('#langSelect').find('input').each(function() {
         $(this).prop('checked', false)
+
     })
+
 }
 
 
