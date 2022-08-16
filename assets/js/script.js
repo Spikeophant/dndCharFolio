@@ -7,27 +7,36 @@ var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
 function languageSelectionPopulation(race) {
     console.log('Fetching allowed language proficiencies based on race ' + race);
-    var languages = '';
     fetch(dndApiUrl+'/races/'+ race).then(function(res) {
         if (res.ok) {
             res.json().then(function(data) {
-                console.log(data.languages)
                 for (var lang in data.languages) {
                     var langCheck = $('#lang' + data.languages[lang].index);
-                    console.log(langCheck)
                     langCheck.prop('checked', true);
                 }
             })
         }
         else {
-            console.log('Failed with a status code of ' + res.statusText)
+            console.log('Failed with a status code of ' + res.statusText);
         }
     })
         .catch(function (error) {
-            console.log('Could not connect to API')
+            console.log('Could not connect to API');
         });
 }
-console.log(languageSelectionPopulation('tiefling'));
+
+function languageUnselect() {
+    $('#langSelect').find('input').each(function() {
+        $(this).prop('checked', false)
+    })
+}
+
+
+raceEl.addEventListener('change', (event) => {
+    languageUnselect();
+    console.log('Race has been changed to: ' + raceEl.value)
+    languageSelectionPopulation(raceEl.value)
+})
 
 classEl.addEventListener('change', (event) => {
     console.log("Class has been changed to: " + classEl.value);
