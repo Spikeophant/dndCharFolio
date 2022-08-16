@@ -5,6 +5,41 @@ var abilityModEls = $(".abilityMod")
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
+function languageSelectionPopulation(race) {
+    console.log('Fetching allowed language proficiencies based on race ' + race);
+    fetch(dndApiUrl+'/races/'+ race).then(function(res) {
+        if (res.ok) {
+            res.json().then(function(data) {
+                for (var lang in data.languages) {
+                    var langCheck = $('#lang' + data.languages[lang].index);
+                    langCheck.prop('checked', true);
+                }
+            })
+        }
+        else {
+            console.log('Failed with a status code of ' + res.statusText);
+        }
+    })
+        .catch(function (error) {
+            console.log('Could not connect to API');
+        });
+}
+
+function languageUnselect() {
+    $('#langSelect').find('input').each(function() {
+        $(this).prop('checked', false)
+
+    })
+
+}
+
+
+raceEl.addEventListener('change', (event) => {
+    languageUnselect();
+    console.log('Race has been changed to: ' + raceEl.value)
+    languageSelectionPopulation(raceEl.value)
+})
+
 classEl.addEventListener('change', (event) => {
     console.log("Class has been changed to: " + classEl.value);
 
