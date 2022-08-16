@@ -11,8 +11,11 @@ function languageSelectionPopulation(race) {
     fetch(dndApiUrl+'/races/'+ race).then(function(res) {
         if (res.ok) {
             res.json().then(function(data) {
-                for (var lang in res.data.languages) {
-                    $('#lang' + lang)
+                console.log(data.languages)
+                for (var lang in data.languages) {
+                    var langCheck = $('#lang' + data.languages[lang].index);
+                    console.log(langCheck)
+                    langCheck.prop('checked', true);
                 }
             })
         }
@@ -24,7 +27,7 @@ function languageSelectionPopulation(race) {
             console.log('Could not connect to API')
         });
 }
-console.log(languageSelectionPopulation('elf'));
+console.log(languageSelectionPopulation('tiefling'));
 
 classEl.addEventListener('change', (event) => {
     console.log("Class has been changed to: " + classEl.value);
