@@ -189,6 +189,11 @@ for (var x = 0; x < skillCheckboxEls.length; x++) {
 }
 
 var updateArmorAndHP = function() {
+    // Armor Class
+    if (abilityModEls.eq(1).val() !== "") {
+        acEl.value = 10 + parseInt(abilityModEls.eq(1).val());
+    }
+
     // HP
     hpEl.value = curHitDie // + parseInt(abilityModEls.eq(4).val());
     console.log(typeof abilityModEls.eq(4).val())
