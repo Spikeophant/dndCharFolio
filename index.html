@@ -111,86 +111,86 @@
                 <form id="abilityScores">
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Strength" type="number" min="3" class="validate abilityInput" id="charStr" value=10>
+                          <input value=10 type="number" min="3" class="validate abilityInput" id="charStr">
                           <label for="charStr">Strength</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charStrMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charStrMod">
                           <label for="charStrMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveStr">
-                          <label for="saveStr">Strength Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="savestr">
+                          <label for="savestr">Strength Save</label>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Dexterity" type="number" min="3" class="validate abilityInput" id="charDex" value=10>
+                          <input type="number" min="3" class="validate abilityInput" id="charDex" value=10>
                           <label for="charStr">Dexterity</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charDexMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charDexMod">
                           <label for="charDexMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveDex">
-                          <label for="saveDex">Dexterity Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="savedex">
+                          <label for="savedex">Dexterity Save</label>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Intelligence" type="number" min="3" class="validate abilityInput" id="charInt" value=10>
+                          <input type="number" min="3" class="validate abilityInput" id="charInt" value=10>
                           <label for="charInt">Intelligence</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charIntMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charIntMod">
                           <label for="charIntMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveInt">
-                          <label for="saveInt">Intelligence Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="saveint">
+                          <label for="saveint">Intelligence Save</label>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Wisdom" type="number" min="3" class="validate abilityInput" id="charWis" value=10>
+                          <input type="number" min="3" class="validate abilityInput" id="charWis" value=10>
                           <label for="charWis">Wisdom</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charWisMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charWisMod">
                           <label for="charWisMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveWis">
-                          <label for="saveWis">Wisdom Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="savewis">
+                          <label for="savewis">Wisdom Save</label>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Constitution" type="number" min="3" class="validate abilityInput" id="charCon" value=10>
+                          <input type="number" min="3" class="validate abilityInput" id="charCon" value=10>
                           <label for="charCon">Constitution</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charConMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charConMod">
                           <label for="charConMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveCon">
-                          <label for="saveCon">Constitution Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="savecon">
+                          <label for="savecon">Constitution Save</label>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col s2">
-                          <input placeholder="Charisma" type="number" min="3" class="validate abilityInput" id="charChar" value=10>
+                          <input type="number" min="3" class="validate abilityInput" id="charChar" value=10>
                           <label for="charChar">Charisma</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="Adjustment" type="number" class="validate abilityMod" disabled id="charCharMod">
+                          <input value=0 type="number" class="validate abilityMod" disabled id="charCharMod">
                           <label for="charCharMod">Adjustment</label>
                       </div>
                       <div class="col s2">
-                          <input placeholder="0" type="number" class="validate" disabled id="saveChar">
-                          <label for="saveChar">Charisma Save</label>
+                          <input value=0 type="number" class="validate saveThrow" disabled id="savechar">
+                          <label for="savechar">Charisma Save</label>
                       </div>
                   </div>
                 </form>
@@ -363,7 +363,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="dex skillMod validate" id="skill-acrobatics" disabled placeholder="0">
-                        <label for="skillAcroMod">Acrobatics(dex)</label>
+                        <label for="skill-acrobatics">Acrobatics(dex)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -375,7 +375,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="wis skillMod validate" id="skill-animal-handling" disabled placeholder="0">
-                        <label for="skillAnimHanMod">Animal Handling(wis)</label>
+                        <label for="skill-animal-handling">Animal Handling(wis)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -387,7 +387,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="int skillMod validate" id="skill-arcana" disabled placeholder="0">
-                        <label for="skillArcMod">Arcana</label>
+                        <label for="skill-arcana">Arcana</label>
                     </div>
                     </div>
                 <div class="row">
@@ -401,7 +401,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="str skillMod validate" id="skill-athletics" disabled placeholder="0">
-                        <label for="skillAthMod">Athletics(str)</label>
+                        <label for="skill-athletics">Athletics(str)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -413,7 +413,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="cha skillMod validate" id="skill-deception" disabled placeholder="0">
-                        <label for="skillDecMod">Deception(Char)</label>
+                        <label for="skill-deception">Deception(Char)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -425,7 +425,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="int skillMod validate" id="skill-history" disabled placeholder="0">
-                        <label for="skillHistMod">History</label>
+                        <label for="skill-history">History</label>
                     </div>
                 </div>
                 <div class="row">
@@ -439,7 +439,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="wis skillMod validate" id="skill-insight" disabled placeholder="0">
-                        <label for="skillInsMod">Insight(wis)</label>
+                        <label for="skill-insight">Insight(wis)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -451,7 +451,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="cha skillMod validate" id="skill-intimidation" disabled placeholder="0">
-                        <label for="skillIntMod">Intimidation(Char)</label>
+                        <label for="skill-intimidation">Intimidation(Char)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -463,7 +463,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="int skillMod validate" id="skill-investigation" disabled placeholder="0">
-                        <label for="skillInvMod">Investigation</label>
+                        <label for="skill-investigation">Investigation</label>
                     </div>
                 </div>
                 <div class="row">
@@ -477,7 +477,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="wis skillMod validate" id="skill-medicine" disabled placeholder="0">
-                        <label for="skillMedMod">Medicine(wis)</label>
+                        <label for="skill-medicine">Medicine(wis)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -489,7 +489,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="int skillMod validate" id="skill-nature" disabled placeholder="0">
-                        <label for="skillNatMod">Nature(Int)</label>
+                        <label for="skill-nature">Nature(Int)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -501,7 +501,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="wis skillMod validate" id="skill-perception" disabled placeholder="0">
-                        <label for="skillPercMod">Perception(wis)</label>
+                        <label for="skill-perception">Perception(wis)</label>
                     </div>
                 </div>
                 <div class="row">
@@ -515,7 +515,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="cha skillMod validate" id="skill-performance" disabled placeholder="0">
-                        <label for="skillPerfMod">Performance(char)</label>
+                        <label for="skill-performance">Performance(char)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -527,7 +527,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="cha skillMod validate" id="skill-persuasion" disabled placeholder="0">
-                        <label for="skillPersMod">Persuation(Char)</label>
+                        <label for="skill-persuasion">Persuation(Char)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -539,7 +539,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="int skillMod validate" id="skill-religion" disabled placeholder="0">
-                        <label for="skillRelMod">Religion</label>
+                        <label for="skill-religion">Religion</label>
                     </div>
                 </div>
                 <div class="row">
@@ -553,7 +553,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="dex skillMod validate" id="skill-sleight-of-hand" disabled placeholder="0">
-                        <label for="skillSoHMod">Sleight of Hand(dex)</label>
+                        <label for="skill-sleight-of-hand">Sleight of Hand(dex)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -565,7 +565,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="dex skillMod validate" id="skill-stealth" disabled placeholder="0">
-                        <label for="skillSteMod">Stealth(dex)</label>
+                        <label for="skill-stealth">Stealth(dex)</label>
                     </div>
                     <div class="col s1">
                         <p>
@@ -577,7 +577,7 @@
                     </div>
                     <div class="col s1">
                         <input type="number" class="wis skillMod validate" id="skill-survival" disabled placeholder="0">
-                        <label for="skillSurvMod">Survival</label>
+                        <label for="skill-survival">Survival</label>
                     </div>
                 </div>
                 </div>

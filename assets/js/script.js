@@ -1,7 +1,8 @@
 var classEl = document.querySelector("#charClass");
 var raceEl = document.querySelector("#charRace");
-var abilityEls = $(".abilityInput")
-var abilityModEls = $(".abilityMod")
+var abilityEls = $(".abilityInput");
+var abilityModEls = $(".abilityMod");
+var abilitySaveEls = $('.saveThrow');
 var skillModEls = $(".skillMod");
 var skillCheckboxEls = document.querySelectorAll(".isProf"); //$(".isProf");
 var acEl = document.querySelector("#charArmor");
@@ -28,7 +29,6 @@ function languageSelectionPopulation(race) {
                 }
 
                 //piggybacking off of this function for sub-race lookup
-                console.log(data.subraces);
                 updateSubraceMenu(data.subraces);
             })
         }
@@ -75,6 +75,27 @@ function updateSubraceMenu(subraces) {
 }
 
 
+function setSavingThrows(charclass) {
+    for (var x = 0; x < abilityModEls.length; x++) {
+        //set the save equal to the adjustment.
+        abilitySaveEls.eq(x).val(abilityModEls.eq(x).val());
+    }
+    console.log('Fetching saving throw bonuses for class ' + charclass);
+    //fetch the classe saving throws
+    fetch(dndApiUrl+'/classes/'+charclass).then(function(res) {
+        if (res.ok) {
+            res.json().then(function(data) {
+                for (x in data.saving_throws) {
+                    //set the saving throws for this class to +2 their current value.
+                    $('#save' + data.saving_throws[x].index).val(Number($('#save' + data.saving_throws[x].index).val()) + 2);
+                }
+            })
+        }
+    })
+}
+
+
+
 raceEl.addEventListener('change', (event) => {
     languageUnselect();
     console.log('Race has been changed to: ' + raceEl.value)
@@ -105,7 +126,8 @@ classEl.addEventListener('change', (event) => {
         .catch(function (error) {
             console.log("Could not connect to API")
         })
-
+    //call saving throws last so all other calcs are complete for adjustments.
+    setSavingThrows(classEl.value)
     /*
         when class is selected, update:
             *saving throw proficiencies
@@ -181,6 +203,8 @@ var updateSkillMods = function(index) {
         }
 
     })
+    //update saving throws when the skills are modified.
+    setSavingThrows(classEl.value)
 }
 
 // Adding an event listener for objects of the same class. What is this nonsense
