@@ -5,9 +5,6 @@
     <title>Character Folio and Generator</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
 <main>
@@ -84,6 +81,12 @@
                             <option value="tiefling">Tiefling</option>
                         </select>
                         <label for="charRace">Race</label>
+                    </div>
+                    <div class="col s2">
+                        <select id="charSubrace">
+                            <option value="" disabled selected>Subrace</option>
+                        </select>
+                        <label for="charSubrace">Sub-race</label>
                     </div>
                     <div class="col s1">
                         <input placeholder="Age" id="charAge" type="text" class="validate">
@@ -582,6 +585,8 @@
     </section>
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="assets/js/script.js"></script>
 </body>
 </html>

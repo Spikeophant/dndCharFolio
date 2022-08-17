@@ -6,6 +6,8 @@ var skillModEls = $(".skillMod");
 var skillCheckboxEls = document.querySelectorAll(".isProf"); //$(".isProf");
 var acEl = document.querySelector("#charArmor");
 var hpEl = document.querySelector("#charHp");
+var subraceMenuEl = $("#charSubrace");
+var subraceMenuBackup = subraceMenuEl.clone()
 var curHitDie;
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
@@ -24,6 +26,10 @@ function languageSelectionPopulation(race) {
                     var langCheck = $('#lang' + data.languages[lang].index);
                     langCheck.prop('checked', true);
                 }
+
+                //piggybacking off of this function for sub-race lookup
+                console.log(data.subraces);
+                updateSubraceMenu(data.subraces);
             })
         }
         else {
@@ -41,6 +47,31 @@ function languageUnselect() {
 
     })
 
+}
+
+subraceMenuEl.on('contentChanged', function() {
+    console.log("A new subrace was added! OR changed.");
+    $(this).formSelect();
+})
+
+function updateSubraceMenu(subraces) {
+    // clear any other subraces and reset the subrace selection
+
+    if (subraceMenuEl.children().length > 1) {
+        for (var i = 1; i < subraceMenuEl.children.length; i++) {
+            subraceMenuEl.children()[i].remove();
+
+            subraceMenuEl.trigger('contentChanged');
+        }
+    }
+
+    // add the subraces
+    for (var i = 0; i < subraces.length; i++) {
+        var newEntry = $("<option>").attr("value", subraces[i].index).text(subraces[i].name);
+        subraceMenuEl.append(newEntry);
+
+        subraceMenuEl.trigger('contentChanged');
+    }
 }
 
 
