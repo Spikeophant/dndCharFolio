@@ -46,37 +46,42 @@ function languageSelectionPopulation(race) {
         });
 }
 
-//function subraceBonusLookup
+function resetRacialBonuses() {
+    // When the race is changed, sub-race is also changed, so subtract all ability bonuses from race
+
+    for (var i = 0; i < abilityEls.length; i++) {
+        console.log(abilityEls.eq(i).val())
+        abilityEls.eq(i).val(parseInt(abilityEls.eq(i).val()) - raceBonusArr[i]);
+    }
+}
 
 function updateRacialBonuses(bonusArr) {
+    // this implementation seems like a bad idea but it will do for now with srd race bonuses
     for (var i = 0; i < bonusArr.length; i++) {
-        let index = bonusArr[i].ability_score.index;
-        let bonus = bonusArr[i].bonus;
-        
-        if (index === "str") {
-            raceBonusArr[0] = bonus;
+        if (bonusArr[i].ability_score.index === "str") {
+            abilityEls.eq(0).val( parseInt(abilityEls.eq(0).val()) + bonusArr[i].bonus);
+            raceBonusArr[0] += bonusArr[i].bonus
         }
-        else if (index === "dex") {
-            raceBonusArr[1] = bonus;
+        else if (bonusArr[i].ability_score.index === "dex") {
+            abilityEls.eq(1).val(parseInt(abilityEls.eq(1).val()) + bonusArr[i].bonus);
+            raceBonusArr[1] += bonusArr[i].bonus
         }
-        else if (index === "int") {
-            raceBonusArr[2] = bonus;
+        else if (bonusArr[i].ability_score.index === "int") {
+            abilityEls.eq(2).val(parseInt(abilityEls.eq(2).val()) + bonusArr[i].bonus);
+            raceBonusArr[2] += bonusArr[i].bonus
         }
-        else if (index === "wis") {
-            raceBonusArr[3] = bonus;
+        else if (bonusArr[i].ability_score.index === "wis") {
+            abilityEls.eq(3).val(parseInt(abilityEls.eq(3).val()) + bonusArr[i].bonus);
+            raceBonusArr[3] += bonusArr[i].bonus
         }
-        else if (index === "con") {
-            raceBonusArr[4] = bonus;
+        else if (bonusArr[i].ability_score.index === "con") {
+            abilityEls.eq(4).val(parseInt(abilityEls.eq(4).val()) + bonusArr[i].bonus);
+            raceBonusArr[4] += bonusArr[i].bonus
         }
-        else if (index === "cha") {
-            raceBonusArr[5] = bonus;
+        else if (bonusArr[i].ability_score.index === "cha") {
+            abilityEls.eq(5).val(parseInt(abilityEls.eq(5).val()) + bonusArr[i].bonus);
+            raceBonusArr[5] += bonusArr[i].bonus
         }
-    }
-
-    // propagate bonuses
-    console.log(abilityEls);
-    for (var i = 0; i < abilityEls.length; i++) {
-        abilityEls.eq(i).val( parseInt(abilityEls.eq(i).val()) + raceBonusArr[i] );
     }
 }
 
@@ -137,7 +142,8 @@ function subraceBonusLookup(subrace) {
     fetch(dndApiUrl + "/subraces/" + subrace).then(function (res) {
         if (res.ok) {
             res.json().then(function(data) {
-                console.log(data);
+                //console.log(data);
+                updateRacialBonuses(data.ability_bonuses);
             })
         }
     })
@@ -145,6 +151,7 @@ function subraceBonusLookup(subrace) {
 
 raceEl.addEventListener('change', (event) => {
     languageUnselect();
+    resetRacialBonuses();
     console.log('Race has been changed to: ' + raceEl.value)
     // Reset ability bonus array when race is changed
     raceBonusArr = [0, 0, 0, 0, 0, 0];
