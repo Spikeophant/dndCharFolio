@@ -9,11 +9,12 @@ var acEl = document.querySelector("#charArmor");
 var hpEl = document.querySelector("#charHp");
 var subraceMenuEl = $("#charSubrace");
 var subraceMenuBackup = subraceMenuEl.clone()
-var curHitDie;
+var curHitDie = 0;
+var raceBonusArr = [0, 0, 0, 0, 0, 0];
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
-
+// 0: STR, 1: DEX, 2: INT, 3: WIS, 4: CON, 5: CHA
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
@@ -30,6 +31,10 @@ function languageSelectionPopulation(race) {
 
                 //piggybacking off of this function for sub-race lookup
                 updateSubraceMenu(data.subraces);
+
+                console.log(data.ability_bonuses);
+                updateRacialBonuses(data.ability_bonuses)
+                
             })
         }
         else {
@@ -39,6 +44,40 @@ function languageSelectionPopulation(race) {
         .catch(function (error) {
             console.log('Could not connect to API');
         });
+}
+
+//function subraceBonusLookup
+
+function updateRacialBonuses(bonusArr) {
+    for (var i = 0; i < bonusArr.length; i++) {
+        let index = bonusArr[i].ability_score.index;
+        let bonus = bonusArr[i].bonus;
+        
+        if (index === "str") {
+            raceBonusArr[0] = bonus;
+        }
+        else if (index === "dex") {
+            raceBonusArr[1] = bonus;
+        }
+        else if (index === "int") {
+            raceBonusArr[2] = bonus;
+        }
+        else if (index === "wis") {
+            raceBonusArr[3] = bonus;
+        }
+        else if (index === "con") {
+            raceBonusArr[4] = bonus;
+        }
+        else if (index === "cha") {
+            raceBonusArr[5] = bonus;
+        }
+    }
+
+    // propagate bonuses
+    console.log(abilityEls);
+    for (var i = 0; i < abilityEls.length; i++) {
+        abilityEls.eq(i).val( parseInt(abilityEls.eq(i).val()) + raceBonusArr[i] );
+    }
 }
 
 function languageUnselect() {
@@ -94,12 +133,28 @@ function setSavingThrows(charclass) {
     })
 }
 
-
+function subraceBonusLookup(subrace) {
+    fetch(dndApiUrl + "/subraces/" + subrace).then(function (res) {
+        if (res.ok) {
+            res.json().then(function(data) {
+                console.log(data);
+            })
+        }
+    })
+}
 
 raceEl.addEventListener('change', (event) => {
     languageUnselect();
     console.log('Race has been changed to: ' + raceEl.value)
+    // Reset ability bonus array when race is changed
+    raceBonusArr = [0, 0, 0, 0, 0, 0];
+
     languageSelectionPopulation(raceEl.value)
+})
+
+subraceMenuEl.on('change', function() {
+    console.log("Subrace has been changed to: " + subraceMenuEl.val())
+    subraceBonusLookup(subraceMenuEl.val());
 })
 
 
@@ -251,7 +306,7 @@ var updateArmorAndHP = function() {
 
     // HP
     hpEl.value = curHitDie // + parseInt(abilityModEls.eq(4).val());
-    console.log(typeof abilityModEls.eq(4).val())
+    //console.log(typeof abilityModEls.eq(4).val())
     if (abilityModEls.eq(4).val() !== "") {
         hpEl.value = curHitDie + parseInt(abilityModEls.eq(4).val());
     }
@@ -262,8 +317,9 @@ var updateArmorAndHP = function() {
 */
 abilityEls.on('input', function() {
     let scoreChanged;
-    console.log($(this).index())
-    switch ($(this).index()) {
+    //console.log(abilityEls.index(this))
+    //console.log(e.target)
+    switch (abilityEls.index(this)) {
         case 0:
             scoreChanged = "Strength";
             break;
