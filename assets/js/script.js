@@ -4,20 +4,20 @@ var abilityEls = $(".abilityInput");
 var abilityModEls = $(".abilityMod");
 var abilitySaveEls = $(".saveThrow");
 var skillModEls = $(".skillMod");
-var skillCheckboxEls = document.querySelectorAll(".isProf"); //$(".isProf");
+var skillCheckboxEls = document.querySelectorAll(".isProf");
 var acEl = document.querySelector("#charArmor");
 var hpEl = document.querySelector("#charHp");
 var subraceMenuEl = $("#charSubrace");
 var saveBtn = $("#saveCar");
 var loadBtn = $("#loadChar");
 var subraceMenuBackup = subraceMenuEl.clone()
+var charPortrait = document.querySelector("#charImg");
+var descFormEl = $("#charDesc");
 var curHitDie = 0;
 var raceBonusArr = [0, 0, 0, 0, 0, 0];
-var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
+var imgApiUrl = "https://api.pexels.com/v1/search?query=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
-
-// 0: STR, 1: DEX, 2: INT, 3: WIS, 4: CON, 5: CHA
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
@@ -115,7 +115,7 @@ function languageSelectionPopulation(race) {
     console.log("Fetching allowed language proficiencies based on race " + race);
     fetch(dndApiUrl+"/races/"+ race).then(function(res) {
         if (res.ok) {
-            res.json().then(function(data) {
+            res.json().then(function (data) {
                 for (var lang in data.languages) {
                     var langCheck = $("#lang" + data.languages[lang].index);
                     langCheck.prop("checked", true);
@@ -126,7 +126,7 @@ function languageSelectionPopulation(race) {
 
                 console.log(data.ability_bonuses);
                 updateRacialBonuses(data.ability_bonuses)
-                
+
             })
         }
         else {
@@ -142,7 +142,6 @@ function resetRacialBonuses() {
     // When the race is changed, sub-race is also changed, so subtract all ability bonuses from race
 
     for (var i = 0; i < abilityEls.length; i++) {
-        console.log(abilityEls.eq(i).val())
         abilityEls.eq(i).val(parseInt(abilityEls.eq(i).val()) - raceBonusArr[i]);
     }
 }
@@ -151,7 +150,7 @@ function updateRacialBonuses(bonusArr) {
     // this implementation seems like a bad idea but it will do for now with srd race bonuses
     for (var i = 0; i < bonusArr.length; i++) {
         if (bonusArr[i].ability_score.index === "str") {
-            abilityEls.eq(0).val( parseInt(abilityEls.eq(0).val()) + bonusArr[i].bonus);
+            abilityEls.eq(0).val(parseInt(abilityEls.eq(0).val()) + bonusArr[i].bonus);
             raceBonusArr[0] += bonusArr[i].bonus
         }
         else if (bonusArr[i].ability_score.index === "dex") {
@@ -180,13 +179,11 @@ function updateRacialBonuses(bonusArr) {
 function languageUnselect() {
     $("#langSelect").find("input").each(function() {
         $(this).prop("checked", false)
-
     })
-
 }
 
-subraceMenuEl.on("contentChanged", function() {
-    console.log("A new subrace was added! OR changed.");
+
+subraceMenuEl.on('contentChanged', function () {
     $(this).formSelect();
 })
 
@@ -210,6 +207,25 @@ function updateSubraceMenu(subraces) {
     }
 }
 
+function findPlaceholderImage() {
+    fetch("https://api.pexels.com/v1/search?query=" + raceEl.value + " " + classEl.value, {
+        headers: {
+            Authorization: "563492ad6f91700001000001003c3f3b47ce4890aaa532d91bd88aab"
+        }
+    }).then(function(res) {
+        if (res.ok) {
+            res.json().then(function(data) {
+                charPortrait.src = data.photos[0].src.small;
+            })
+        }
+        else {
+            console.log('Failed with a status code of ' + res.statusText);
+        }
+    })
+    .catch(function (error) {
+        console.log('Could not connect to API');
+    });
+}
 
 function setSavingThrows(charclass) {
     for (var x = 0; x < abilityModEls.length; x++) {
@@ -220,7 +236,7 @@ function setSavingThrows(charclass) {
     //fetch the classe saving throws
     fetch(dndApiUrl+"/classes/"+charclass).then(function(res) {
         if (res.ok) {
-            res.json().then(function(data) {
+            res.json().then(function (data) {
                 for (x in data.saving_throws) {
                     //set the saving throws for this class to +2 their current value.
                     $("#save" + data.saving_throws[x].index).val(Number($("#save" + data.saving_throws[x].index).val()) + 2);
@@ -233,7 +249,7 @@ function setSavingThrows(charclass) {
 function subraceBonusLookup(subrace) {
     fetch(dndApiUrl + "/subraces/" + subrace).then(function (res) {
         if (res.ok) {
-            res.json().then(function(data) {
+            res.json().then(function (data) {
                 //console.log(data);
                 updateRacialBonuses(data.ability_bonuses);
             })
@@ -251,19 +267,26 @@ raceEl.addEventListener("change", (event) => {
     languageSelectionPopulation(raceEl.value)
 })
 
-subraceMenuEl.on('change', function() {
+subraceMenuEl.on('change', function () {
     console.log("Subrace has been changed to: " + subraceMenuEl.val())
     subraceBonusLookup(subraceMenuEl.val());
 })
 
 
-classEl.addEventListener("change", (event) => {
+
+descFormEl.on('change', function () {
+    if (classEl.value !== "" && raceEl.value !== "") {
+        findPlaceholderImage();
+    }
+})
+
+classEl.addEventListener('change', (event) => {
     console.log("Class has been changed to: " + classEl.value);
 
     fetch(dndApiUrl + "/classes/" + classEl.value)
-        .then(function(res) {
+        .then(function (res) {
             if (res.ok) {
-                res.json().then(function(data) {
+                res.json().then(function (data) {
                     console.log(data)
                     // update skill proficiency selection
                     updateSkillProficiencySelection(data.proficiency_choices[0]);
@@ -289,7 +312,7 @@ classEl.addEventListener("change", (event) => {
     */
 });
 
-var updateSkillProficiencySelection = function(skills) {
+var updateSkillProficiencySelection = function (skills) {
     maxProficiencies = skills.choose;
     profRestrictions = [];
 
@@ -297,7 +320,7 @@ var updateSkillProficiencySelection = function(skills) {
     for (var i = 0; i < skills.from.options.length; i++) {
         profRestrictions.push(skills.from.options[i].item.index)
     }
-    
+
     currentProfCount = 0;
 
     // before changing selection, uncheck and disable all checkboxes
@@ -317,22 +340,21 @@ var updateSkillProficiencySelection = function(skills) {
     }
 }
 
-var updateSkillMods = function(index) {
+var updateSkillMods = function (index) {
     // if an index is specified, update the specific skill, meant for proficiency
     if (index !== undefined) {
         if (skillCheckboxEls[index].checked) {
-            skillModEls.eq(index).val( parseInt(skillModEls.eq(index).val()) + 2 );
+            skillModEls.eq(index).val(parseInt(skillModEls.eq(index).val()) + 2);
         }
         else {
-            skillModEls.eq(index).val( parseInt(skillModEls.eq(index).val()) - 2 );
+            skillModEls.eq(index).val(parseInt(skillModEls.eq(index).val()) - 2);
         }
         return;
     }
 
     // otherwise, go through this switch statement
     skillModEls.each(function () {
-        let ability = $(this).attr("class").split(" ")[0];
-        //console.log($(this).index())
+        let ability = $(this).attr('class').split(' ')[0];
         switch (ability) {
             case "str":
                 $(this).val(abilityModEls.eq(0).val());
@@ -352,8 +374,6 @@ var updateSkillMods = function(index) {
             case "cha":
                 $(this).val(abilityModEls.eq(5).val());
                 break;
-            default:
-                console.log("Still working on it!")
         }
 
     })
@@ -363,7 +383,7 @@ var updateSkillMods = function(index) {
 
 // Adding an event listener for objects of the same class. What is this nonsense
 for (var x = 0; x < skillCheckboxEls.length; x++) {
-    skillCheckboxEls[x].addEventListener("change", function(e) {
+    skillCheckboxEls[x].addEventListener("change", function (e) {
         if (this.checked) {
             currentProfCount++;
         }
@@ -397,7 +417,7 @@ for (var x = 0; x < skillCheckboxEls.length; x++) {
     // Potential issues: This may not play well when selecting a race that gives a skill proficiency.
 }
 
-var updateArmorAndHP = function() {
+var updateArmorAndHP = function () {
     // Armor Class
     if (abilityModEls.eq(1).val() !== "") {
         acEl.value = 10 + parseInt(abilityModEls.eq(1).val());
@@ -414,36 +434,9 @@ var updateArmorAndHP = function() {
 /*
     Handles ability score input changing. Should affect HP, Armor Class, and Skill modifiers.
 */
-abilityEls.on("input", function() {
-    let scoreChanged;
-    //console.log(abilityEls.index(this))
-    //console.log(e.target)
-    switch (abilityEls.index(this)) {
-        case 0:
-            scoreChanged = "Strength";
-            break;
-        case 1:
-            scoreChanged = "Dex"
-            break;
-        case 2:
-            scoreChanged = "Int"
-            break;
-        case 3:
-            scoreChanged = "Wis";
-            break;
-        case 4:
-            scoreChanged = "Con"
-            break
-        case 5:
-            scoreChanged = "Cha"
-            break;
-    }
-
-    console.log($(".abilityInput"))
-    console.log("Something changed, specifically " + scoreChanged + " to " + $(this).val())
-
+abilityEls.on('input', function () {
     // change ability modifer
-    $(".abilityMod").eq(abilityEls.index(this)).val( Math.floor(($(this).val() - 10) / 2 ));
+    $(".abilityMod").eq(abilityEls.index(this)).val(Math.floor(($(this).val() - 10) / 2));
 
     // propagate ability mods through skill list
     updateSkillMods();
@@ -458,12 +451,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var instances = M.FormSelect.init(elems);
 });
 
-var init = function() {
+var init = function () {
     updateSkillMods();
 
     updateArmorAndHP();
 
     for (var i = 0; i < abilityEls.length; i++) {
-        abilityModEls.eq(i).val( Math.floor( (abilityEls.eq(i).val() - 10) / 2 ) );
+        abilityModEls.eq(i).val(Math.floor((abilityEls.eq(i).val() - 10) / 2));
     }
 }
