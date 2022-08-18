@@ -128,6 +128,7 @@ function findPlaceholderImage() {
             res.json().then(function(data) {
                 console.log("This worked. Huzzah.")
                 console.log(data)
+                console.log(data.photos[0].src.small);
             })
         }
         else {
