@@ -20,9 +20,25 @@ var currentProfCount = 0;
 var profRestrictions = [];
 
 function populateCharList() {
+    keys = Object.keys(localStorage);
+    for (var i =0; i < keys.length; i++) {
+        var charName = JSON.parse(localStorage.getItem(keys[i])).charName;
+        var newRow = document.createElement("div");
+        newRow.classList.add("row");
+        var newBtn = document.createElement("a");
+        newBtn.innerText = "Load"
+        newBtn.classList.add("btn-large", "btn-floating", "waves-effect", "waves-light", "red");
+        newBtn.id = keys[i];
+        var newI = document.createElement("i");
+        newI.innerText = charName;
+        $("#saveRow").append(newRow).append(newBtn).append(newI);
 
+        newBtn.addEventListener("click", function (event) {
+            loadChar(event.target.id)
+        })
+    }
 }
-
+populateCharList()
 function saveChar() {
     //initialize empty character array
     currentChar = {}
@@ -44,6 +60,7 @@ function saveChar() {
            currentChar["charSubrace"] = allInputEls[x].value;
        }
    }
+   populateCharList();
    return currentChar;
 }
 
@@ -76,7 +93,7 @@ function loadChar(characterName) {
 
 saveBtn.on("click", function() {
     curChar = saveChar()
-    localStorage.setItem(curChar.charName, JSON.stringify(curChar));
+    localStorage.setItem(curChar.charName.replace(/\s+/g, ''), JSON.stringify(curChar));
 })
 
 loadBtn.on("click", function() {
