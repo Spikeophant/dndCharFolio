@@ -69,6 +69,7 @@ function saveChar() {
            currentChar["charSubrace"] = allInputEls[x].value;
        }
    }
+    currentChar["imageSrc"] = charPortrait.attributes.src.value
    //add the button.
    populateCharList();
    return currentChar;
@@ -83,7 +84,9 @@ function loadChar(characterName) {
         //make sure key is populated so we can use it.
         if (key !== "") {
             //if it's a checkbox, check it.
-            if ($("#"+key)[0].type === "checkbox") {
+        if (key === "imageSrc") {
+                charPortrait.attributes.src.value = char[key]
+            } else if ($("#"+key)[0].type === "checkbox") {
                 if (char[key] === true) {
                     $("#"+key).prop("checked", char[key]);
                 }
@@ -93,7 +96,7 @@ function loadChar(characterName) {
                 var elems = document.querySelectorAll("select");
                 var instances = M.FormSelect.init(elems);
 
-            } else { //else it's a normal text input or a number, just set the val.
+            }  else { //else it's a normal text input or a number, just set the val.
                 $("#"+key).val(char[key]);
             }
         }
@@ -263,7 +266,6 @@ raceEl.addEventListener("change", (event) => {
     console.log('Race has been changed to: ' + raceEl.value)
     // Reset ability bonus array when race is changed
     raceBonusArr = [0, 0, 0, 0, 0, 0];
-
     languageSelectionPopulation(raceEl.value)
 })
 
