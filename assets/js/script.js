@@ -19,10 +19,17 @@ var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
 
+function populateCharList() {
+
+}
+
 function saveChar() {
+    //initialize empty character array
     currentChar = {}
+    //get all inputs on page.
     var allInputEls = $(":input");
-    console.log(allInputEls);
+    // loop through them and persist them into local storage based on character name
+    // as well as storing data based on input type.
    for (var x = 0; x < allInputEls.length; x++) {
        if (allInputEls[x].id !== "") {
            if ($("#"+allInputEls[x].id)[0].type == "checkbox") {
@@ -33,28 +40,33 @@ function saveChar() {
                currentChar[allInputEls[x].id] = allInputEls[x].value;
            }
        } else {
+           //this is a lame hack I'm sorry.
            currentChar["charSubrace"] = allInputEls[x].value;
        }
    }
    return currentChar;
 }
 
-function loadChar(charName) {
-    char = JSON.parse(localStorage.getItem(charName));
+function loadChar(characterName) {
+    //load character into object
+    char = JSON.parse(localStorage.getItem(characterName));
     for (var key in char) {
-       // console.log("Restoring Char" + char.charName)
+       console.log("Restoring Char" + char.charName)
         console.log(char[key])
+        //make sure key is populated so we can use it.
         if (key !== "") {
+            //if it's a checkbox, check it.
             if ($("#"+key)[0].type === "checkbox") {
                 if (char[key] === true) {
                     $("#"+key).prop("checked", char[key]);
                 }
+                //if it's a select, select it and rerender the select options.
             } else if ($("#"+key)[0].type === "select-one") {
                 $("#"+key).val(char[key]);
-                var elems = document.querySelectorAll('select');
+                var elems = document.querySelectorAll("select");
                 var instances = M.FormSelect.init(elems);
 
-            } else {
+            } else { //else it's a normal text input or a number, just set the val.
                 $("#"+key).val(char[key]);
             }
         }
