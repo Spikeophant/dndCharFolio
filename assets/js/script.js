@@ -2,30 +2,83 @@ var classEl = document.querySelector("#charClass");
 var raceEl = document.querySelector("#charRace");
 var abilityEls = $(".abilityInput");
 var abilityModEls = $(".abilityMod");
-var abilitySaveEls = $('.saveThrow');
+var abilitySaveEls = $(".saveThrow");
 var skillModEls = $(".skillMod");
 var skillCheckboxEls = document.querySelectorAll(".isProf"); //$(".isProf");
 var acEl = document.querySelector("#charArmor");
 var hpEl = document.querySelector("#charHp");
 var subraceMenuEl = $("#charSubrace");
+var saveBtn = $("#saveCar");
+var loadBtn = $("#loadChar");
 var subraceMenuBackup = subraceMenuEl.clone()
 var curHitDie;
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
-
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
 
+function saveChar() {
+    currentChar = {}
+    var allInputEls = $(":input");
+    console.log(allInputEls);
+   for (var x = 0; x < allInputEls.length; x++) {
+       if (allInputEls[x].id !== "") {
+           if ($("#"+allInputEls[x].id)[0].type == "checkbox") {
+               currentChar[allInputEls[x].id] = $("#" + allInputEls[x].id).prop("checked")
+           } else {
+               console.log(allInputEls[x].id);
+               console.log(allInputEls[x].value);
+               currentChar[allInputEls[x].id] = allInputEls[x].value;
+           }
+       } else {
+           currentChar["charSubrace"] = allInputEls[x].value;
+       }
+   }
+   return currentChar;
+}
+
+function loadChar(charName) {
+    char = JSON.parse(localStorage.getItem(charName));
+    for (var key in char) {
+       // console.log("Restoring Char" + char.charName)
+        console.log(char[key])
+        if (key !== "") {
+            if ($("#"+key)[0].type === "checkbox") {
+                if (char[key] === true) {
+                    $("#"+key).prop("checked", char[key]);
+                }
+            } else if ($("#"+key)[0].type === "select-one") {
+                $("#"+key).val(char[key]);
+                var elems = document.querySelectorAll('select');
+                var instances = M.FormSelect.init(elems);
+
+            } else {
+                $("#"+key).val(char[key]);
+            }
+        }
+
+    }
+}
+
+saveBtn.on("click", function() {
+    curChar = saveChar()
+    localStorage.setItem(curChar.charName, JSON.stringify(curChar));
+})
+
+loadBtn.on("click", function() {
+    loadChar();
+})
+
 function languageSelectionPopulation(race) {
-    console.log('Fetching allowed language proficiencies based on race ' + race);
-    fetch(dndApiUrl+'/races/'+ race).then(function(res) {
+    console.log("Fetching allowed language proficiencies based on race " + race);
+    fetch(dndApiUrl+"/races/"+ race).then(function(res) {
         if (res.ok) {
             res.json().then(function(data) {
                 for (var lang in data.languages) {
-                    var langCheck = $('#lang' + data.languages[lang].index);
-                    langCheck.prop('checked', true);
+                    var langCheck = $("#lang" + data.languages[lang].index);
+                    langCheck.prop("checked", true);
                 }
 
                 //piggybacking off of this function for sub-race lookup
@@ -33,23 +86,23 @@ function languageSelectionPopulation(race) {
             })
         }
         else {
-            console.log('Failed with a status code of ' + res.statusText);
+            console.log("Failed with a status code of " + res.statusText);
         }
     })
         .catch(function (error) {
-            console.log('Could not connect to API');
+            console.log("Could not connect to API");
         });
 }
 
 function languageUnselect() {
-    $('#langSelect').find('input').each(function() {
-        $(this).prop('checked', false)
+    $("#langSelect").find("input").each(function() {
+        $(this).prop("checked", false)
 
     })
 
 }
 
-subraceMenuEl.on('contentChanged', function() {
+subraceMenuEl.on("contentChanged", function() {
     console.log("A new subrace was added! OR changed.");
     $(this).formSelect();
 })
@@ -61,7 +114,7 @@ function updateSubraceMenu(subraces) {
         for (var i = 1; i < subraceMenuEl.children.length; i++) {
             subraceMenuEl.children()[i].remove();
 
-            subraceMenuEl.trigger('contentChanged');
+            subraceMenuEl.trigger("contentChanged");
         }
     }
 
@@ -70,7 +123,7 @@ function updateSubraceMenu(subraces) {
         var newEntry = $("<option>").attr("value", subraces[i].index).text(subraces[i].name);
         subraceMenuEl.append(newEntry);
 
-        subraceMenuEl.trigger('contentChanged');
+        subraceMenuEl.trigger("contentChanged");
     }
 }
 
@@ -80,14 +133,14 @@ function setSavingThrows(charclass) {
         //set the save equal to the adjustment.
         abilitySaveEls.eq(x).val(abilityModEls.eq(x).val());
     }
-    console.log('Fetching saving throw bonuses for class ' + charclass);
+    console.log("Fetching saving throw bonuses for class " + charclass);
     //fetch the classe saving throws
-    fetch(dndApiUrl+'/classes/'+charclass).then(function(res) {
+    fetch(dndApiUrl+"/classes/"+charclass).then(function(res) {
         if (res.ok) {
             res.json().then(function(data) {
                 for (x in data.saving_throws) {
                     //set the saving throws for this class to +2 their current value.
-                    $('#save' + data.saving_throws[x].index).val(Number($('#save' + data.saving_throws[x].index).val()) + 2);
+                    $("#save" + data.saving_throws[x].index).val(Number($("#save" + data.saving_throws[x].index).val()) + 2);
                 }
             })
         }
@@ -96,14 +149,14 @@ function setSavingThrows(charclass) {
 
 
 
-raceEl.addEventListener('change', (event) => {
+raceEl.addEventListener("change", (event) => {
     languageUnselect();
-    console.log('Race has been changed to: ' + raceEl.value)
+    console.log("Race has been changed to: " + raceEl.value)
     languageSelectionPopulation(raceEl.value)
 })
 
 
-classEl.addEventListener('change', (event) => {
+classEl.addEventListener("change", (event) => {
     console.log("Class has been changed to: " + classEl.value);
 
     fetch(dndApiUrl + "/classes/" + classEl.value)
@@ -154,7 +207,7 @@ var updateSkillProficiencySelection = function(skills) {
 
     for (var i = 0; i < skills.from.options.length; i++) {
         for (var j = 0; j < skillModEls.length; j++) {
-            // This is kind of stupid, but by looping through the skill proficiencies that API gives and comparing it to the entries we have on the HTML, the index of the correct checkbox to enable can be found. It's inefficient. I know. -JL
+            // This is kind of stupid, but by looping through the skill proficiencies that API gives and comparing it to the entries we have on the HTML, the index of the correct checkbox to enable can be found. It"s inefficient. I know. -JL
             if (skillModEls[j].id === skills.from.options[i].item.index) {
                 skillCheckboxEls[j].disabled = false;
                 break;
@@ -177,7 +230,7 @@ var updateSkillMods = function(index) {
 
     // otherwise, go through this switch statement
     skillModEls.each(function () {
-        let ability = $(this).attr('class').split(' ')[0];
+        let ability = $(this).attr("class").split(" ")[0];
         //console.log($(this).index())
         switch (ability) {
             case "str":
@@ -260,7 +313,7 @@ var updateArmorAndHP = function() {
 /*
     Handles ability score input changing. Should affect HP, Armor Class, and Skill modifiers.
 */
-abilityEls.on('input', function() {
+abilityEls.on("input", function() {
     let scoreChanged;
     console.log($(this).index())
     switch ($(this).index()) {
@@ -298,8 +351,8 @@ abilityEls.on('input', function() {
 
 // add event listener for race selection
 
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
+document.addEventListener("DOMContentLoaded", function() {
+    var elems = document.querySelectorAll("select");
     var instances = M.FormSelect.init(elems);
 });
 
