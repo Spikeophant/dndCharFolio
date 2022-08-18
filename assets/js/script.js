@@ -20,9 +20,12 @@ var currentProfCount = 0;
 var profRestrictions = [];
 
 function populateCharList() {
+    //get all the keys of the objects in local storage.
     keys = Object.keys(localStorage);
     for (var i =0; i < keys.length; i++) {
+        //get a specific char name from local storage.
         var charName = JSON.parse(localStorage.getItem(keys[i])).charName;
+        //build the button
         var newRow = document.createElement("div");
         newRow.classList.add("row");
         var newBtn = document.createElement("a");
@@ -31,17 +34,20 @@ function populateCharList() {
         newBtn.id = keys[i];
         var newI = document.createElement("i");
         newI.innerText = charName;
+        //place the button
         $("#saveRow").append(newRow).append(newBtn).append(newI);
-
+        //hook the button.
         newBtn.addEventListener("click", function (event) {
-            loadChar(event.target.id)
+            loadChar(event.target.id);
         })
     }
 }
-populateCharList()
+populateCharList();
+
+
 function saveChar() {
     //initialize empty character array
-    currentChar = {}
+    currentChar = {};
     //get all inputs on page.
     var allInputEls = $(":input");
     // loop through them and persist them into local storage based on character name
@@ -49,7 +55,7 @@ function saveChar() {
    for (var x = 0; x < allInputEls.length; x++) {
        if (allInputEls[x].id !== "") {
            if ($("#"+allInputEls[x].id)[0].type == "checkbox") {
-               currentChar[allInputEls[x].id] = $("#" + allInputEls[x].id).prop("checked")
+               currentChar[allInputEls[x].id] = $("#" + allInputEls[x].id).prop("checked");
            } else {
                console.log(allInputEls[x].id);
                console.log(allInputEls[x].value);
@@ -60,6 +66,7 @@ function saveChar() {
            currentChar["charSubrace"] = allInputEls[x].value;
        }
    }
+   //add the button.
    populateCharList();
    return currentChar;
 }
@@ -93,6 +100,7 @@ function loadChar(characterName) {
 
 saveBtn.on("click", function() {
     curChar = saveChar()
+    //remove the spaces from the name for the key so we can use it as the id of the button later.
     localStorage.setItem(curChar.charName.replace(/\s+/g, ''), JSON.stringify(curChar));
 })
 
