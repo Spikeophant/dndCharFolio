@@ -16,7 +16,6 @@ var raceBonusArr = [0, 0, 0, 0, 0, 0];
 var imgApiUrl = "https://api.pexels.com/v1/search?query=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
-// 0: STR, 1: DEX, 2: INT, 3: WIS, 4: CON, 5: CHA
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
@@ -126,9 +125,7 @@ function findPlaceholderImage() {
     }).then(function(res) {
         if (res.ok) {
             res.json().then(function(data) {
-                console.log("This worked. Huzzah.")
-                console.log(data)
-                console.log(data.photos[0].src.small);
+                charPortrait.src = data.photos[0].src.small;
             })
         }
         else {
@@ -139,21 +136,6 @@ function findPlaceholderImage() {
         console.log('Could not connect to API');
     });
 }
-// function findPlaceholderImage() {
-//     fetch("https://imsea.herokuapp.com/api/1?q=elf%20bard", { mode: "no-cors" }).then(function (res) {
-//         // if (res.ok) {
-//         res.json().then(function (data) {
-//             console.log("This worked. Huzzah.")
-//         })
-//         // }
-//         // else {
-//         //     console.log('Failed with a status code of ' + res.statusText);
-//         // }
-//     })
-//     // .catch(function (error) {
-//     //     console.log('Could not connect to API');
-//     // });
-// }
 
 function setSavingThrows(charclass) {
     for (var x = 0; x < abilityModEls.length; x++) {
@@ -202,12 +184,7 @@ subraceMenuEl.on('change', function () {
 
 
 descFormEl.on('change', function () {
-    console.log("Class: " + classEl.value);
-    console.log("Race: " + raceEl.value);
-
     if (classEl.value !== "" && raceEl.value !== "") {
-        console.log("Both fields are empty, look up an image!")
-
         findPlaceholderImage();
     }
 })
@@ -287,7 +264,6 @@ var updateSkillMods = function (index) {
     // otherwise, go through this switch statement
     skillModEls.each(function () {
         let ability = $(this).attr('class').split(' ')[0];
-        //console.log($(this).index())
         switch (ability) {
             case "str":
                 $(this).val(abilityModEls.eq(0).val());
@@ -307,8 +283,6 @@ var updateSkillMods = function (index) {
             case "cha":
                 $(this).val(abilityModEls.eq(5).val());
                 break;
-            default:
-                console.log("Still working on it!")
         }
 
     })
@@ -370,33 +344,6 @@ var updateArmorAndHP = function () {
     Handles ability score input changing. Should affect HP, Armor Class, and Skill modifiers.
 */
 abilityEls.on('input', function () {
-    let scoreChanged;
-    //console.log(abilityEls.index(this))
-    //console.log(e.target)
-    switch (abilityEls.index(this)) {
-        case 0:
-            scoreChanged = "Strength";
-            break;
-        case 1:
-            scoreChanged = "Dex"
-            break;
-        case 2:
-            scoreChanged = "Int"
-            break;
-        case 3:
-            scoreChanged = "Wis";
-            break;
-        case 4:
-            scoreChanged = "Con"
-            break
-        case 5:
-            scoreChanged = "Cha"
-            break;
-    }
-
-    console.log($(".abilityInput"))
-    console.log("Something changed, specifically " + scoreChanged + " to " + $(this).val())
-
     // change ability modifer
     $(".abilityMod").eq(abilityEls.index(this)).val(Math.floor(($(this).val() - 10) / 2));
 
