@@ -11,10 +11,13 @@ var subraceMenuEl = $("#charSubrace");
 var saveBtn = $("#saveCar");
 var loadBtn = $("#loadChar");
 var subraceMenuBackup = subraceMenuEl.clone()
-var curHitDie;
+var curHitDie = 0;
+var raceBonusArr = [0, 0, 0, 0, 0, 0];
 var imgApiUrl = "https://imsea.herokuapp.com/api/1?q=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
 
+
+// 0: STR, 1: DEX, 2: INT, 3: WIS, 4: CON, 5: CHA
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
@@ -120,6 +123,10 @@ function languageSelectionPopulation(race) {
 
                 //piggybacking off of this function for sub-race lookup
                 updateSubraceMenu(data.subraces);
+
+                console.log(data.ability_bonuses);
+                updateRacialBonuses(data.ability_bonuses)
+                
             })
         }
         else {
@@ -129,6 +136,45 @@ function languageSelectionPopulation(race) {
         .catch(function (error) {
             console.log("Could not connect to API");
         });
+}
+
+function resetRacialBonuses() {
+    // When the race is changed, sub-race is also changed, so subtract all ability bonuses from race
+
+    for (var i = 0; i < abilityEls.length; i++) {
+        console.log(abilityEls.eq(i).val())
+        abilityEls.eq(i).val(parseInt(abilityEls.eq(i).val()) - raceBonusArr[i]);
+    }
+}
+
+function updateRacialBonuses(bonusArr) {
+    // this implementation seems like a bad idea but it will do for now with srd race bonuses
+    for (var i = 0; i < bonusArr.length; i++) {
+        if (bonusArr[i].ability_score.index === "str") {
+            abilityEls.eq(0).val( parseInt(abilityEls.eq(0).val()) + bonusArr[i].bonus);
+            raceBonusArr[0] += bonusArr[i].bonus
+        }
+        else if (bonusArr[i].ability_score.index === "dex") {
+            abilityEls.eq(1).val(parseInt(abilityEls.eq(1).val()) + bonusArr[i].bonus);
+            raceBonusArr[1] += bonusArr[i].bonus
+        }
+        else if (bonusArr[i].ability_score.index === "int") {
+            abilityEls.eq(2).val(parseInt(abilityEls.eq(2).val()) + bonusArr[i].bonus);
+            raceBonusArr[2] += bonusArr[i].bonus
+        }
+        else if (bonusArr[i].ability_score.index === "wis") {
+            abilityEls.eq(3).val(parseInt(abilityEls.eq(3).val()) + bonusArr[i].bonus);
+            raceBonusArr[3] += bonusArr[i].bonus
+        }
+        else if (bonusArr[i].ability_score.index === "con") {
+            abilityEls.eq(4).val(parseInt(abilityEls.eq(4).val()) + bonusArr[i].bonus);
+            raceBonusArr[4] += bonusArr[i].bonus
+        }
+        else if (bonusArr[i].ability_score.index === "cha") {
+            abilityEls.eq(5).val(parseInt(abilityEls.eq(5).val()) + bonusArr[i].bonus);
+            raceBonusArr[5] += bonusArr[i].bonus
+        }
+    }
 }
 
 function languageUnselect() {
@@ -184,12 +230,30 @@ function setSavingThrows(charclass) {
     })
 }
 
-
+function subraceBonusLookup(subrace) {
+    fetch(dndApiUrl + "/subraces/" + subrace).then(function (res) {
+        if (res.ok) {
+            res.json().then(function(data) {
+                //console.log(data);
+                updateRacialBonuses(data.ability_bonuses);
+            })
+        }
+    })
+}
 
 raceEl.addEventListener("change", (event) => {
     languageUnselect();
-    console.log("Race has been changed to: " + raceEl.value)
+    resetRacialBonuses();
+    console.log('Race has been changed to: ' + raceEl.value)
+    // Reset ability bonus array when race is changed
+    raceBonusArr = [0, 0, 0, 0, 0, 0];
+
     languageSelectionPopulation(raceEl.value)
+})
+
+subraceMenuEl.on('change', function() {
+    console.log("Subrace has been changed to: " + subraceMenuEl.val())
+    subraceBonusLookup(subraceMenuEl.val());
 })
 
 
@@ -341,7 +405,7 @@ var updateArmorAndHP = function() {
 
     // HP
     hpEl.value = curHitDie // + parseInt(abilityModEls.eq(4).val());
-    console.log(typeof abilityModEls.eq(4).val())
+    //console.log(typeof abilityModEls.eq(4).val())
     if (abilityModEls.eq(4).val() !== "") {
         hpEl.value = curHitDie + parseInt(abilityModEls.eq(4).val());
     }
@@ -352,8 +416,9 @@ var updateArmorAndHP = function() {
 */
 abilityEls.on("input", function() {
     let scoreChanged;
-    console.log($(this).index())
-    switch ($(this).index()) {
+    //console.log(abilityEls.index(this))
+    //console.log(e.target)
+    switch (abilityEls.index(this)) {
         case 0:
             scoreChanged = "Strength";
             break;
