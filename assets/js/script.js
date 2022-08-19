@@ -29,10 +29,8 @@ var profRestrictions = [];
 function populateCharList() {
     //get all the keys of the objects in local storage.
     keys = Object.keys(chars);
-    console.log(keys)
-    console.log(chars)
     for (var i =0; i < keys.length; i++) {
-        //get a specific char name from local storage.
+        //check to see if the character button is already there.
         if (!$('#'+keys[i]).length)
         {
             var charName = chars[keys[i]].charName;
@@ -80,7 +78,6 @@ function saveChar() {
    }
     currentChar["imageSrc"] = charPortrait.attributes.src.value
    //add the button.
-   populateCharList();
    return currentChar;
 }
 
@@ -89,7 +86,6 @@ function loadChar(characterName) {
     char = chars[characterName];
     for (var key in char) {
        console.log("Restoring Char" + char.charName)
-        console.log(char[key])
         //make sure key is populated so we can use it.
         if (key !== "") {
             //if it's a checkbox, check it.
@@ -116,9 +112,10 @@ function loadChar(characterName) {
 saveBtn.on("click", function() {
     curChar = saveChar();
     chars[curChar.charName.replace(/\s+/g, '')] = curChar;
-    console.log(chars)
     //remove the spaces from the name for the key so we can use it as the id of the button later.
     localStorage.setItem("chars", JSON.stringify(chars));
+    //populate character list here after save.
+    populateCharList();
 })
 
 function languageSelectionPopulation(race) {
