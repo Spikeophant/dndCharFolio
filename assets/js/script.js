@@ -244,6 +244,7 @@ function setSavingThrows(charclass) {
     fetch(dndApiUrl+"/classes/"+charclass).then(function(res) {
         if (res.ok) {
             res.json().then(function (data) {
+                console.log(data.saving_throws)
                 for (x in data.saving_throws) {
                     //set the saving throws for this class to +2 their current value.
                     $("#save" + data.saving_throws[x].index).val(Number($("#save" + data.saving_throws[x].index).val()) + 2);
@@ -294,6 +295,8 @@ classEl.addEventListener('change', (event) => {
             if (res.ok) {
                 res.json().then(function (data) {
                     console.log(data)
+                    updateSkillMods();
+
                     // update skill proficiency selection
                     updateSkillProficiencySelection(data.proficiency_choices[0]);
                     curHitDie = data.hit_die;
@@ -310,7 +313,8 @@ classEl.addEventListener('change', (event) => {
             console.log("Could not connect to API")
         })
     //call saving throws last so all other calcs are complete for adjustments.
-    setSavingThrows(classEl.value)
+    console.log("classEl change EventListener")
+    //setSavingThrows(classEl.value)
     /*
         when class is selected, update:
             *saving throw proficiencies
@@ -384,6 +388,7 @@ var updateSkillMods = function (index) {
 
     })
     //update saving throws when the skills are modified.
+    console.log("UpdateSkillMods")
     setSavingThrows(classEl.value)
 }
 
