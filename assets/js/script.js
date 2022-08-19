@@ -297,6 +297,8 @@ classEl.addEventListener('change', (event) => {
             if (res.ok) {
                 res.json().then(function (data) {
                     console.log(data)
+                    updateSkillMods();
+
                     // update skill proficiency selection
                     updateSkillProficiencySelection(data.proficiency_choices[0]);
                     curHitDie = data.hit_die;
