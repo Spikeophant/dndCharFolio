@@ -17,32 +17,41 @@ var curHitDie = 0;
 var raceBonusArr = [0, 0, 0, 0, 0, 0];
 var imgApiUrl = "https://api.pexels.com/v1/search?query=";
 var dndApiUrl = "https://www.dnd5eapi.co/api/";
-
+if (localStorage.getItem('chars') == null) {
+    var chars = {};
+} else {
+    chars = JSON.parse(localStorage.getItem('chars'));
+}
 var maxProficiencies;
 var currentProfCount = 0;
 var profRestrictions = [];
 
 function populateCharList() {
     //get all the keys of the objects in local storage.
-    keys = Object.keys(localStorage);
+    keys = Object.keys(chars);
+    console.log(keys)
+    console.log(chars)
     for (var i =0; i < keys.length; i++) {
         //get a specific char name from local storage.
-        var charName = JSON.parse(localStorage.getItem(keys[i])).charName;
-        //build the button
-        var newRow = document.createElement("div");
-        newRow.classList.add("row");
-        var newBtn = document.createElement("a");
-        newBtn.innerText = "Load"
-        newBtn.classList.add("btn-large", "btn-floating", "waves-effect", "waves-light", "red");
-        newBtn.id = keys[i];
-        var newI = document.createElement("i");
-        newI.innerText = charName;
-        //place the button
-        $("#saveRow").append(newRow).append(newBtn).append(newI);
-        //hook the button.
-        newBtn.addEventListener("click", function (event) {
-            loadChar(event.target.id);
-        })
+        if (!$('#'+keys[i]).length)
+        {
+            var charName = chars[keys[i]].charName;
+            //build the button
+            var newRow = document.createElement("div");
+            newRow.classList.add("row");
+            var newBtn = document.createElement("a");
+            newBtn.innerText = "Load"
+            newBtn.classList.add("btn-large", "btn-floating", "waves-effect", "waves-light", "red");
+            newBtn.id = keys[i];
+            var newI = document.createElement("i");
+            newI.innerText = charName;
+            //place the button
+            $("#saveRow").append(newRow).append(newBtn).append(newI);
+            //hook the button.
+            newBtn.addEventListener("click", function (event) {
+                loadChar(event.target.id);
+            })
+        }
     }
 }
 populateCharList();
@@ -77,7 +86,7 @@ function saveChar() {
 
 function loadChar(characterName) {
     //load character into object
-    char = JSON.parse(localStorage.getItem(characterName));
+    char = chars[characterName];
     for (var key in char) {
        console.log("Restoring Char" + char.charName)
         console.log(char[key])
@@ -105,13 +114,11 @@ function loadChar(characterName) {
 }
 
 saveBtn.on("click", function() {
-    curChar = saveChar()
+    curChar = saveChar();
+    chars[curChar.charName.replace(/\s+/g, '')] = curChar;
+    console.log(chars)
     //remove the spaces from the name for the key so we can use it as the id of the button later.
-    localStorage.setItem(curChar.charName.replace(/\s+/g, ''), JSON.stringify(curChar));
-})
-
-loadBtn.on("click", function() {
-    loadChar();
+    localStorage.setItem("chars", JSON.stringify(chars));
 })
 
 function languageSelectionPopulation(race) {
